@@ -1,6 +1,6 @@
-# 💻 ============================================
-# 💻 ===        kickstart.linux Setup         ===
-# 💻 ============================================
+#  ============================================
+#  ===         💻 Kickstart.Linux           ===
+#  ============================================
 
 # 📁 Base Directories
 KICKSTART_DIR := $(HOME)/projects/kickstart.linux
@@ -32,6 +32,14 @@ ZSHRC_FILE := $(HOME)/.zshrc
 ZSHRC_SOURCE := $(KICKSTART_DIR)/zsh/.zshrc
 P10K_FILE := $(HOME)/.p10k.zsh
 P10K_SOURCE := $(KICKSTART_DIR)/zsh/.p10k.zsh
+
+# 📦 Flux CLI
+FLUX_VERSION := 2.2.3
+FLUX_FILE := flux_$(FLUX_VERSION)_linux_amd64.tar.gz
+FLUX_URL := https://github.com/fluxcd/flux2/releases/download/v$(FLUX_VERSION)/$(FLUX_FILE)
+FLUX_TEMP_EXTRACT := $(TEMP_DIR)/flux
+FLUX_TARGET_DIR := $(BIN_DIR)/flux
+FLUX_BINARY := $(FLUX_TARGET_DIR)/flux
 
 # 🔡 Fonts
 FONTS_DIR := $(HOME)/.local/share/fonts
@@ -113,6 +121,20 @@ install-fonts:
 	@rm -f $(HACK_FONT_ZIP)
 	@fc-cache -fv > /dev/null
 	@echo "✅ Hack Nerd Font installed to $(FONTS_DIR)"
+
+install-flux:
+	@echo "\n\n\n\n🔧 ====================================="
+	@echo "🔧 ===        Installing Flux CD     ==="
+	@echo "🔧 =====================================\n"
+	@mkdir -p $(TEMP_DIR) $(FLUX_TARGET_DIR)
+	@curl -Lo $(TEMP_DIR)/$(FLUX_FILE) $(FLUX_URL)
+	@rm -rf $(FLUX_TEMP_EXTRACT)
+	@mkdir -p $(FLUX_TEMP_EXTRACT)
+	@tar -xzf $(TEMP_DIR)/$(FLUX_FILE) -C $(FLUX_TEMP_EXTRACT)
+	@mv $(FLUX_TEMP_EXTRACT)/flux $(FLUX_BINARY)
+	@chmod +x $(FLUX_BINARY)
+	@rm -rf $(TEMP_DIR)/$(FLUX_FILE) $(FLUX_TEMP_EXTRACT)
+	@echo "✅ Flux installed at $(FLUX_BINARY)"
 
 clean:
 	@echo "\n\n\n\n🧹 ====================================="

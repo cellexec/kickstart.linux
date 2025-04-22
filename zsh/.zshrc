@@ -54,6 +54,7 @@ zstyle ':completions:*' list-colors '${(s.:.)LS_COLORS}'
 # Extend Path variables
 export PATH="$PATH:$HOME/projects/dotfiles/bin/nvim/bin"
 export PATH="$PATH:$HOME/projects/dotfiles/bin/fzf/"
+export PATH="$PATH:$HOME/projects/dotfiles/bin/flux/"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/bin"
