@@ -27,6 +27,10 @@ GITCONFIG_SOURCE := $(DOTFILES_DIR)/gitconfig
 ZSHRC_FILE := $(HOME)/.zshrc
 ZSHRC_SOURCE := $(DOTFILES_DIR)/zshrc
 
+# p10k config
+P10K_FILE := $(HOME)/.p10k.zsh
+P10K_SOURCE := $(DOTFILES_DIR)/p10k.zsh
+
 .PHONY: all install install-nvim install-fzf install-gitconfig install-zsh clean link path
 
 all: install link
@@ -109,6 +113,13 @@ link:
 	fi
 	@ln -snf $(ZSHRC_SOURCE) $(ZSHRC_FILE)
 	@echo "✅ Linked ~/.zshrc → $(ZSHRC_SOURCE)"
+
+	@if [ -f $(P10K_FILE) ]; then \
+		echo "🔁 Existing .p10k.zsh found. Replacing with symlink..."; \
+		rm -f $(P10K_FILE); \
+	fi
+	@ln -snf $(P10K_SOURCE) $(P10K_FILE)
+	@echo "✅ Linked ~/.p10k.zsh → $(P10K_SOURCE)"
 
 path:
 	@echo "\n📂 === PATH Setup (Testing Only) ==="
