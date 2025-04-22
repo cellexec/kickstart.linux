@@ -23,11 +23,14 @@ FZF_BINARY := $(FZF_TARGET_DIR)/fzf
 GITCONFIG_FILE := $(HOME)/.gitconfig
 GITCONFIG_SOURCE := $(DOTFILES_DIR)/gitconfig
 
-.PHONY: all install install-nvim install-fzf install-gitconfig install-zsh clean link path
+# Powerlevel10k
+P10K_DIR := $(HOME)/.oh-my-zsh/custom/themes/powerlevel10k
+
+.PHONY: all install install-nvim install-fzf install-gitconfig install-zsh install-p10k clean link path
 
 all: install link
 
-install: install-nvim install-fzf install-gitconfig install-zsh
+install: install-nvim install-fzf install-gitconfig install-zsh install-p10k
 
 install-nvim:
 	@echo "\n🔧 === Installing Neovim ==="
@@ -72,12 +75,22 @@ install-zsh:
 	else \
 		echo "✅ Zsh is already installed."; \
 	fi
-	@if [ "$$SHELL" != "$$(command -v zsh)" ]; then \
+	@if [ "$$SHELL" != "$$($(shell command -v zsh))" ]; then \
 		ZSH_PATH=$$(command -v zsh); \
 		echo "🔁 Changing default shell to $$ZSH_PATH..."; \
 		chsh -s $$ZSH_PATH; \
+		echo "🔔 Please log out and back in again to start using zsh as your shell."; \
 	else \
 		echo "✅ Zsh is already the default shell."; \
+	fi
+
+install-p10k:
+	@echo "\n🎨 === Installing Powerlevel10k ==="
+	@if [ ! -d $(P10K_DIR) ]; then \
+		echo "📥 Cloning powerlevel10k theme..."; \
+		git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $(P10K_DIR); \
+	else \
+		echo "✅ Powerlevel10k already installed."; \
 	fi
 
 clean:
@@ -93,6 +106,10 @@ link:
 	@mkdir -p $(HOME)/.config
 	@ln -snf $(DOTFILES_DIR)/nvim $(HOME)/.config/nvim
 	@echo "✅ Linked nvim config: ~/.config/nvim → $(DOTFILES_DIR)/nvim"
+
+	@mkdir -p $(HOME)/.config/kitty
+	@ln -snf $(DOTFILES_DIR)/kitty/kitty.conf $(HOME)/.config/kitty/kitty.conf
+	@echo "✅ Linked kitty config: ~/.config/kitty/kitty.conf → $(DOTFILES_DIR)/kitty/kitty.conf"
 
 path:
 	@echo "\n📂 === PATH Setup (Testing Only) ==="
