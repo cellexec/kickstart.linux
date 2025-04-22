@@ -85,10 +85,11 @@ install-zsh:
 	else \
 		echo "✅ Zsh is already installed."; \
 	fi
-	@ZSH_PATH=$$(command -v zsh); \
-	if [ "$$SHELL" != "$$ZSH_PATH" ]; then \
+	@CURRENT_SHELL=$$(getent passwd "$$(whoami)" | cut -d: -f7); \
+	ZSH_PATH=$$(command -v zsh); \
+	if [ "$$CURRENT_SHELL" != "$$ZSH_PATH" ]; then \
 		echo "🔁 Changing default shell to $$ZSH_PATH..."; \
-		chsh -s $$ZSH_PATH; \
+		chsh -s "$$ZSH_PATH"; \
 		echo "🔔 Please log out and back in again to start using zsh as your shell."; \
 	else \
 		echo "✅ Zsh is already the default shell."; \
