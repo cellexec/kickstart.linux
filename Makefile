@@ -1,18 +1,20 @@
-# 💻 === kickstart.linux ===
+# 💻 ============================================
+# 💻 ===        kickstart.linux Setup         ===
+# 💻 ============================================
 
-# Base Directories
+# 📁 Base Directories
 KICKSTART_DIR := $(HOME)/projects/kickstart.linux
 BIN_DIR := $(KICKSTART_DIR)/bin
 TEMP_DIR := $(KICKSTART_DIR)/temp
 
-# Neovim
+# 📦 Neovim
 NVIM_URL := https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
 NVIM_TEMP_EXTRACT := $(TEMP_DIR)/nvim
 NVIM_TEMP_ARCHIVE := $(TEMP_DIR)/nvim.tar.gz
 NVIM_TARGET_DIR := $(BIN_DIR)/nvim
 NVIM_BINARY := $(NVIM_TARGET_DIR)/bin/nvim
 
-# FZF
+# 📦 fzf
 FZF_VERSION := 0.61.2
 FZF_TAG := v$(FZF_VERSION)
 FZF_FILE := fzf-$(FZF_VERSION)-linux_amd64.tar.gz
@@ -21,17 +23,17 @@ FZF_TEMP_EXTRACT := $(TEMP_DIR)/fzf
 FZF_TARGET_DIR := $(BIN_DIR)/fzf
 FZF_BINARY := $(FZF_TARGET_DIR)/fzf
 
-# Git config
+# ⚙️ Git
 GITCONFIG_FILE := $(HOME)/.gitconfig
 GITCONFIG_SOURCE := $(KICKSTART_DIR)/git/.gitconfig
 
-# ZSH & Configs
+# 🐚 Zsh
 ZSHRC_FILE := $(HOME)/.zshrc
 ZSHRC_SOURCE := $(KICKSTART_DIR)/zsh/.zshrc
 P10K_FILE := $(HOME)/.p10k.zsh
 P10K_SOURCE := $(KICKSTART_DIR)/zsh/.p10k.zsh
 
-# Nerd Fonts
+# 🔡 Fonts
 FONTS_DIR := $(HOME)/.local/share/fonts
 HACK_FONT_URL := https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
 HACK_FONT_ZIP := $(TEMP_DIR)/Hack.zip
@@ -43,8 +45,9 @@ all: install link
 install: install-nvim install-fzf install-gitconfig install-zsh install-fonts
 
 install-nvim:
-	@echo "\n🔧 === Installing Neovim ==="
-	@echo "📥 Downloading and installing Neovim..."
+	@echo "\n\n\n\n🔧 ====================================="
+	@echo "🔧 ===         Installing Neovim     ==="
+	@echo "🔧 =====================================\n"
 	@mkdir -p $(TEMP_DIR) $(BIN_DIR)
 	@curl -L $(NVIM_URL) -o $(NVIM_TEMP_ARCHIVE)
 	@rm -rf $(NVIM_TEMP_EXTRACT) $(NVIM_TARGET_DIR)
@@ -56,8 +59,9 @@ install-nvim:
 	@echo "✅ Neovim installed at $(NVIM_BINARY)"
 
 install-fzf:
-	@echo "\n🔧 === Installing fzf ==="
-	@echo "📥 Downloading and installing fzf..."
+	@echo "\n\n\n\n🔧 ====================================="
+	@echo "🔧 ===            Installing fzf     ==="
+	@echo "🔧 =====================================\n"
 	@mkdir -p $(TEMP_DIR) $(BIN_DIR) $(FZF_TARGET_DIR)
 	@curl -L $(FZF_URL) -o $(TEMP_DIR)/$(FZF_FILE)
 	@rm -rf $(FZF_TEMP_EXTRACT)
@@ -69,7 +73,9 @@ install-fzf:
 	@echo "✅ fzf installed to $(FZF_BINARY)"
 
 install-gitconfig:
-	@echo "\n🔧 === Setting up Git config ==="
+	@echo "\n\n\n\n🔧 ====================================="
+	@echo "🔧 ===        Setting up Git config  ==="
+	@echo "🔧 =====================================\n"
 	@if [ -f $(GITCONFIG_FILE) ]; then \
 		echo "🔁 Existing .gitconfig found. Replacing with symlink..."; \
 		rm -f $(GITCONFIG_FILE); \
@@ -78,7 +84,9 @@ install-gitconfig:
 	@echo "✅ Linked ~/.gitconfig → $(GITCONFIG_SOURCE)"
 
 install-zsh:
-	@echo "\n🐚 === Installing Zsh ==="
+	@echo "\n\n\n\n🐚 ====================================="
+	@echo "🐚 ===        Installing Zsh         ==="
+	@echo "🐚 =====================================\n"
 	@if ! command -v zsh >/dev/null 2>&1; then \
 		echo "📦 Installing zsh..."; \
 		sudo apt-get update && sudo apt-get install -y zsh; \
@@ -96,7 +104,9 @@ install-zsh:
 	fi
 
 install-fonts:
-	@echo "\n🔡 === Installing Hack Nerd Font ==="
+	@echo "\n\n\n\n🔡 ====================================="
+	@echo "🔡 ===    Installing Hack Nerd Font  ==="
+	@echo "🔡 =====================================\n"
 	@mkdir -p $(FONTS_DIR) $(TEMP_DIR)
 	@curl -Lo $(HACK_FONT_ZIP) $(HACK_FONT_URL)
 	@unzip -o $(HACK_FONT_ZIP) -d $(FONTS_DIR)
@@ -105,32 +115,38 @@ install-fonts:
 	@echo "✅ Hack Nerd Font installed to $(FONTS_DIR)"
 
 clean:
-	@echo "\n🧹 === Cleaning up ==="
-	@echo "🧹 Cleaning up all installed tools and temp files..."
+	@echo "\n\n\n\n🧹 ====================================="
+	@echo "🧹 ===           Cleaning Up        ==="
+	@echo "🧹 =====================================\n"
+	@echo "🧹 Removing binaries in $(BIN_DIR)"
+	@echo "🧹 Removing temporary files in $(TEMP_DIR)"
+	@echo "🧹 Removing Neovim config from ~/.config/nvim"
 	@rm -rf $(BIN_DIR) $(TEMP_DIR) $(HOME)/.config/nvim
+	@echo "✅ Cleanup complete."
 
 link:
-	@echo "\n🔗 === Linking Configs ==="
-	@echo "🔗 Symlinking config files..."
+	@echo "\n\n\n\n🔗 ====================================="
+	@echo "🔗 ===        Linking Configs        ==="
+	@echo "🔗 =====================================\n"
 
 	@mkdir -p $(HOME)/.config
 
-	@ln -snf $(KICKSTART_DIR)/nvim $(HOME)/.config
+	@ln -snf $(KICKSTART_DIR)/nvim $(HOME)/.config/nvim
 	@echo "✅ Linked nvim config contents → ~/.config/nvim/"
 
 	@mkdir -p $(HOME)/.config/kitty
 	@ln -snf $(KICKSTART_DIR)/kitty/kitty.conf $(HOME)/.config/kitty/kitty.conf
 	@echo "✅ Linked kitty config: ~/.config/kitty/kitty.conf → $(KICKSTART_DIR)/kitty/kitty.conf"
 
-	@ln -snf $(KICKSTART_DIR)/zsh/.zshrc $(HOME)/.zshrc
-	@echo "✅ Linked .zshrc → $(KICKSTART_DIR)/.zshrc"
+	@ln -snf $(ZSHRC_SOURCE) $(ZSHRC_FILE)
+	@echo "✅ Linked .zshrc → $(ZSHRC_SOURCE)"
 
-	@ln -snf $(KICKSTART_DIR)/zsh/.p10k.zsh $(HOME)/.p10k.zsh
-	@echo "✅ Linked .p10k.zsh → $(KICKSTART_DIR)/.p10k.zsh"
+	@ln -snf $(P10K_SOURCE) $(P10K_FILE)
+	@echo "✅ Linked .p10k.zsh → $(P10K_SOURCE)"
 
 path:
-	@echo "\n📂 === PATH Setup (Testing Only) ==="
-	@echo "📂 Export this in your shell to test the tools:"
-	@echo 'export PATH="$(NVIM_TARGET_DIR)/bin:$(FZF_TARGET_DIR):$$PATH"'
-	@echo
+	@echo "\n\n\n\n📂 ====================================="
+	@echo "📂 ===        PATH Setup (dev)      ==="
+	@echo "📂 =====================================\n"
+	@echo '📂 export PATH="$(NVIM_TARGET_DIR)/bin:$(FZF_TARGET_DIR):$$PATH"'
 
