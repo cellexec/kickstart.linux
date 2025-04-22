@@ -85,13 +85,18 @@ install-zsh:
 	else \
 		echo "✅ Zsh is already installed."; \
 	fi
-	@if [ "$$SHELL" != "$$($(shell command -v zsh))" ]; then \
+	@if [ "$$(basename $$SHELL)" != "zsh" ]; then \
 		ZSH_PATH=$$(command -v zsh); \
-		echo "🔁 Changing default shell to $$ZSH_PATH..."; \
-		chsh -s $$ZSH_PATH; \
-		echo "🔔 Please log out and back in again to start using zsh as your shell."; \
+		CURRENT_SHELL=$$(getent passwd $$USER | cut -d: -f7); \
+		if [ "$$CURRENT_SHELL" != "$$ZSH_PATH" ]; then \
+			echo "🔁 Changing default shell to $$ZSH_PATH..."; \
+			chsh -s $$ZSH_PATH; \
+			echo "🔔 Please log out and back in again to start using zsh as your shell."; \
+		else \
+			echo "✅ Zsh is already the default shell."; \
+		fi \
 	else \
-		echo "✅ Zsh is already the default shell."; \
+		echo "✅ Current shell is already Zsh."; \
 	fi
 
 install-fonts:
