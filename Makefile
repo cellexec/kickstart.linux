@@ -113,19 +113,20 @@ link:
 	@echo "\n🔗 === Linking Configs ==="
 	@echo "🔗 Symlinking config files..."
 
-	@mkdir -p $(HOME)/.config/nvim
-	@ln -snf $(KICKSTART_DIR)/nvim $(HOME)/.config/nvim
-	@echo "✅ Linked nvim config: ~/.config/nvim → $(KICKSTART_DIR)/nvim"
+	@mkdir -p $(HOME)/.config
+
+	@ln -snf $(KICKSTART_DIR)/nvim $(HOME)/.config
+	@echo "✅ Linked nvim config contents → ~/.config/nvim/"
 
 	@mkdir -p $(HOME)/.config/kitty
 	@ln -snf $(KICKSTART_DIR)/kitty/kitty.conf $(HOME)/.config/kitty/kitty.conf
 	@echo "✅ Linked kitty config: ~/.config/kitty/kitty.conf → $(KICKSTART_DIR)/kitty/kitty.conf"
 
-	@ln -snf $(ZSHRC_SOURCE) $(ZSHRC_FILE)
-	@echo "✅ Linked .zshrc → $(ZSHRC_SOURCE)"
+	@ln -snf $(KICKSTART_DIR)/zsh/.zshrc $(HOME)/.zshrc
+	@echo "✅ Linked .zshrc → $(KICKSTART_DIR)/.zshrc"
 
-	@ln -snf $(P10K_SOURCE) $(P10K_FILE)
-	@echo "✅ Linked .p10k.zsh → $(P10K_SOURCE)"
+	@ln -snf $(KICKSTART_DIR)/zsh/.p10k.zsh $(HOME)/.p10k.zsh
+	@echo "✅ Linked .p10k.zsh → $(KICKSTART_DIR)/.p10k.zsh"
 
 path:
 	@echo "\n📂 === PATH Setup (Testing Only) ==="
