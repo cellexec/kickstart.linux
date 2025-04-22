@@ -23,11 +23,11 @@ FZF_BINARY := $(FZF_TARGET_DIR)/fzf
 GITCONFIG_FILE := $(HOME)/.gitconfig
 GITCONFIG_SOURCE := $(DOTFILES_DIR)/gitconfig
 
-.PHONY: all install install-nvim install-fzf install-gitconfig clean link path
+.PHONY: all install install-nvim install-fzf install-gitconfig install-zsh clean link path
 
 all: install link
 
-install: install-nvim install-fzf install-gitconfig
+install: install-nvim install-fzf install-gitconfig install-zsh
 
 install-nvim:
 	@echo "\n🔧 === Installing Neovim ==="
@@ -64,6 +64,22 @@ install-gitconfig:
 	@ln -snf $(GITCONFIG_SOURCE) $(GITCONFIG_FILE)
 	@echo "✅ Linked ~/.gitconfig → $(GITCONFIG_SOURCE)"
 
+install-zsh:
+	@echo "\n🐚 === Installing Zsh ==="
+	@if ! command -v zsh >/dev/null 2>&1; then \
+		echo "📦 Installing zsh..."; \
+		sudo apt-get update && sudo apt-get install -y zsh; \
+	else \
+		echo "✅ Zsh is already installed."; \
+	fi
+	@if [ "$$SHELL" != "$$(command -v zsh)" ]; then \
+		ZSH_PATH=$$(command -v zsh); \
+		echo "🔁 Changing default shell to $$ZSH_PATH..."; \
+		chsh -s $$ZSH_PATH; \
+	else \
+		echo "✅ Zsh is already the default shell."; \
+	fi
+
 clean:
 	@echo "\n🧹 === Cleaning up ==="
 	@echo "🧹 Cleaning up all installed tools and temp files..."
@@ -83,3 +99,4 @@ path:
 	@echo "📂 Export this in your shell to test the tools:"
 	@echo 'export PATH="$(NVIM_TARGET_DIR)/bin:$(FZF_TARGET_DIR):$$PATH"'
 	@echo
+
