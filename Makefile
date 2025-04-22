@@ -23,7 +23,7 @@ FZF_BINARY := $(FZF_TARGET_DIR)/fzf
 
 # Git config
 GITCONFIG_FILE := $(HOME)/.gitconfig
-GITCONFIG_SOURCE := $(KICKSTART_DIR)/gitconfig
+GITCONFIG_SOURCE := $(KICKSTART_DIR)/git/.gitconfig
 
 # ZSH & Configs
 ZSHRC_FILE := $(HOME)/.zshrc
