@@ -1,2 +1,4 @@
-# Ignore downloaded binaries
+# Ignore downloaded binaries / artefacts
 /bin/
+/temp/
+
