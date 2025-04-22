@@ -19,11 +19,15 @@ FZF_TEMP_EXTRACT := $(TEMP_DIR)/fzf
 FZF_TARGET_DIR := $(BIN_DIR)/fzf
 FZF_BINARY := $(FZF_TARGET_DIR)/fzf
 
-.PHONY: all install install-nvim install-fzf clean link path
+# Git config
+GITCONFIG_FILE := $(HOME)/.gitconfig
+GITCONFIG_SOURCE := $(DOTFILES_DIR)/gitconfig
+
+.PHONY: all install install-nvim install-fzf install-gitconfig clean link path
 
 all: install link
 
-install: install-nvim install-fzf
+install: install-nvim install-fzf install-gitconfig
 
 install-nvim:
 	@echo "\n🔧 === Installing Neovim ==="
@@ -51,6 +55,15 @@ install-fzf:
 	@rm -rf $(TEMP_DIR)/$(FZF_FILE) $(FZF_TEMP_EXTRACT)
 	@echo "✅ fzf installed to $(FZF_BINARY)"
 
+install-gitconfig:
+	@echo "\n🔧 === Setting up Git config ==="
+	@if [ -f $(GITCONFIG_FILE) ]; then \
+		echo "🔁 Existing .gitconfig found. Replacing with symlink..."; \
+		rm -f $(GITCONFIG_FILE); \
+	fi
+	@ln -snf $(GITCONFIG_SOURCE) $(GITCONFIG_FILE)
+	@echo "✅ Linked ~/.gitconfig → $(GITCONFIG_SOURCE)"
+
 clean:
 	@echo "\n🧹 === Cleaning up ==="
 	@echo "🧹 Cleaning up all installed tools and temp files..."
@@ -70,4 +83,3 @@ path:
 	@echo "📂 Export this in your shell to test the tools:"
 	@echo 'export PATH="$(NVIM_TARGET_DIR)/bin:$(FZF_TARGET_DIR):$$PATH"'
 	@echo
-
