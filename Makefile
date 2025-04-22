@@ -23,6 +23,14 @@ FZF_TEMP_EXTRACT := $(TEMP_DIR)/fzf
 FZF_TARGET_DIR := $(BIN_DIR)/fzf
 FZF_BINARY := $(FZF_TARGET_DIR)/fzf
 
+# 📦 k9s
+K9S_VERSION := 0.50.4
+K9S_FILE := k9s_Linux_amd64.tar.gz
+K9S_URL := https://github.com/derailed/k9s/releases/download/v$(K9S_VERSION)/$(K9S_FILE)
+K9S_TEMP_EXTRACT := $(TEMP_DIR)/k9s
+K9S_TARGET_DIR := $(BIN_DIR)/k9s
+K9S_BINARY := $(K9S_TARGET_DIR)/k9s
+
 # ⚙️ Git
 GITCONFIG_FILE := $(HOME)/.gitconfig
 GITCONFIG_SOURCE := $(KICKSTART_DIR)/git/.gitconfig
@@ -50,7 +58,8 @@ HACK_FONT_ZIP := $(TEMP_DIR)/Hack.zip
 
 all: install link
 
-install: install-nvim install-fzf install-gitconfig install-zsh install-fonts
+install: install-nvim install-fzf install-gitconfig install-zsh install-fonts install-flux install-k9s
+
 
 install-nvim:
 	@echo "\n\n\n\n🔧 ====================================="
@@ -135,6 +144,21 @@ install-flux:
 	@chmod +x $(FLUX_BINARY)
 	@rm -rf $(TEMP_DIR)/$(FLUX_FILE) $(FLUX_TEMP_EXTRACT)
 	@echo "✅ Flux installed at $(FLUX_BINARY)"
+
+
+install-k9s:
+	@echo "\n\n\n\n🔧 ====================================="
+	@echo "🔧 ===        Installing k9s         ==="
+	@echo "🔧 =====================================\n"
+	@mkdir -p $(TEMP_DIR) $(K9S_TARGET_DIR)
+	@curl -Lo $(TEMP_DIR)/$(K9S_FILE) $(K9S_URL)
+	@rm -rf $(K9S_TEMP_EXTRACT)
+	@mkdir -p $(K9S_TEMP_EXTRACT)
+	@tar -xzf $(TEMP_DIR)/$(K9S_FILE) -C $(K9S_TEMP_EXTRACT)
+	@mv $(K9S_TEMP_EXTRACT)/k9s $(K9S_BINARY)
+	@chmod +x $(K9S_BINARY)
+	@rm -rf $(TEMP_DIR)/$(K9S_FILE) $(K9S_TEMP_EXTRACT)
+	@echo "✅ k9s installed at $(K9S_BINARY)"
 
 clean:
 	@echo "\n\n\n\n🧹 ====================================="
