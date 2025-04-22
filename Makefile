@@ -23,14 +23,15 @@ FZF_BINARY := $(FZF_TARGET_DIR)/fzf
 GITCONFIG_FILE := $(HOME)/.gitconfig
 GITCONFIG_SOURCE := $(DOTFILES_DIR)/gitconfig
 
-# Powerlevel10k
-P10K_DIR := $(HOME)/.oh-my-zsh/custom/themes/powerlevel10k
+# Zsh config
+ZSHRC_FILE := $(HOME)/.zshrc
+ZSHRC_SOURCE := $(DOTFILES_DIR)/zshrc
 
-.PHONY: all install install-nvim install-fzf install-gitconfig install-zsh install-p10k clean link path
+.PHONY: all install install-nvim install-fzf install-gitconfig install-zsh clean link path
 
 all: install link
 
-install: install-nvim install-fzf install-gitconfig install-zsh install-p10k
+install: install-nvim install-fzf install-gitconfig install-zsh
 
 install-nvim:
 	@echo "\n🔧 === Installing Neovim ==="
@@ -84,15 +85,6 @@ install-zsh:
 		echo "✅ Zsh is already the default shell."; \
 	fi
 
-install-p10k:
-	@echo "\n🎨 === Installing Powerlevel10k ==="
-	@if [ ! -d $(P10K_DIR) ]; then \
-		echo "📥 Cloning powerlevel10k theme..."; \
-		git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $(P10K_DIR); \
-	else \
-		echo "✅ Powerlevel10k already installed."; \
-	fi
-
 clean:
 	@echo "\n🧹 === Cleaning up ==="
 	@echo "🧹 Cleaning up all installed tools and temp files..."
@@ -110,6 +102,13 @@ link:
 	@mkdir -p $(HOME)/.config/kitty
 	@ln -snf $(DOTFILES_DIR)/kitty/kitty.conf $(HOME)/.config/kitty/kitty.conf
 	@echo "✅ Linked kitty config: ~/.config/kitty/kitty.conf → $(DOTFILES_DIR)/kitty/kitty.conf"
+
+	@if [ -f $(ZSHRC_FILE) ]; then \
+		echo "🔁 Existing .zshrc found. Replacing with symlink..."; \
+		rm -f $(ZSHRC_FILE); \
+	fi
+	@ln -snf $(ZSHRC_SOURCE) $(ZSHRC_FILE)
+	@echo "✅ Linked ~/.zshrc → $(ZSHRC_SOURCE)"
 
 path:
 	@echo "\n📂 === PATH Setup (Testing Only) ==="
