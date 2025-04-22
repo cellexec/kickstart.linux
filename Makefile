@@ -31,11 +31,16 @@ ZSHRC_SOURCE := $(DOTFILES_DIR)/zshrc
 P10K_FILE := $(HOME)/.p10k.zsh
 P10K_SOURCE := $(DOTFILES_DIR)/p10k.zsh
 
-.PHONY: all install install-nvim install-fzf install-gitconfig install-zsh clean link path
+# Fonts
+FONTS_DIR := $(HOME)/.local/share/fonts
+HACK_FONT_URL := https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip
+HACK_FONT_ZIP := $(TEMP_DIR)/Hack.zip
+
+.PHONY: all install install-nvim install-fzf install-gitconfig install-zsh install-fonts clean link path
 
 all: install link
 
-install: install-nvim install-fzf install-gitconfig install-zsh
+install: install-nvim install-fzf install-gitconfig install-zsh install-fonts
 
 install-nvim:
 	@echo "\n🔧 === Installing Neovim ==="
@@ -88,6 +93,15 @@ install-zsh:
 	else \
 		echo "✅ Zsh is already the default shell."; \
 	fi
+
+install-fonts:
+	@echo "\n🔤 === Installing Hack Nerd Font ==="
+	@mkdir -p $(FONTS_DIR) $(TEMP_DIR)
+	@curl -L -o $(HACK_FONT_ZIP) $(HACK_FONT_URL)
+	@unzip -o $(HACK_FONT_ZIP) -d $(FONTS_DIR)
+	@rm -f $(HACK_FONT_ZIP)
+	@fc-cache -fv
+	@echo "✅ Hack Nerd Font installed to $(FONTS_DIR)"
 
 clean:
 	@echo "\n🧹 === Cleaning up ==="
