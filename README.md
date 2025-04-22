@@ -1,8 +1,3 @@
-Absolutely! Here's a clean and helpful `README.md` tailored for your `kickstart.linux` repo:
-
----
-
-```markdown
 # 💻 kickstart.linux
 
 Your personal Linux dotfiles and system bootstrapper — easy to install, modular, and minimal.
