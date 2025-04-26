@@ -14,6 +14,12 @@ NVIM_TEMP_ARCHIVE := $(TEMP_DIR)/nvim.tar.gz
 NVIM_TARGET_DIR := $(BIN_DIR)/nvim
 NVIM_BINARY := $(NVIM_TARGET_DIR)/bin/nvim
 
+# 📦 Tmux
+TPM_URL := https://github.com/tmux-plugins/tpm
+TPM_TARGET := ~/.tmux/plugins/tpm
+TMUX_FILE := $(HOME)/.tmux.conf
+TMUX_SOURCE := $(KICKSTART_DIR)/tmux/.tmux.conf
+
 # 📦 fzf
 FZF_VERSION := 0.61.2
 FZF_TAG := v$(FZF_VERSION)
@@ -58,7 +64,7 @@ HACK_FONT_ZIP := $(TEMP_DIR)/Hack.zip
 
 all: install link
 
-install: install-nvim install-fzf install-gitconfig install-zsh install-fonts install-flux install-k9s
+install: install-nvim install-fzf install-tmux install-gitconfig install-zsh install-fonts install-flux install-k9s
 
 
 install-nvim:
@@ -74,6 +80,25 @@ install-nvim:
 	@chmod +x $(NVIM_BINARY)
 	@rm -rf $(NVIM_TEMP_ARCHIVE) $(NVIM_TEMP_EXTRACT)
 	@echo "✅ Neovim installed at $(NVIM_BINARY)"
+
+install-tmux:
+	@echo "\n\n\n\n🔧 ====================================="
+	@echo "🔧 ===          Installing Tmux      ==="
+	@echo "🔧 =====================================\n"
+	@if ! command -v tmux >/dev/null 2>&1; then \
+		echo "📦 Installing tmux..."; \
+		sudo apt-get update && sudo apt-get install -y tmux; \
+	else \
+		echo "✅ Tmux is already installed."; \
+	fi
+
+	@if [ ! -d "$(TPM_TARGET)" ]; then \
+		echo "📦 Installing TPM (Tmux Plugin Manager)..."; \
+		git clone $(TPM_URL) $(TPM_TARGET); \
+	else \
+		echo "✅ TPM is already installed at $(TPM_TARGET)."; \
+	fi
+
 
 install-fzf:
 	@echo "\n\n\n\n🔧 ====================================="
@@ -183,6 +208,11 @@ link:
 	@mkdir -p $(HOME)/.config/kitty
 	@ln -snf $(KICKSTART_DIR)/kitty/kitty.conf $(HOME)/.config/kitty/kitty.conf
 	@echo "✅ Linked kitty config: ~/.config/kitty/kitty.conf → $(KICKSTART_DIR)/kitty/kitty.conf"
+
+	@mkdir -p $(HOME)/.config
+	@ln -snf $(TMUX_SOURCE) $(TMUX_FILE)
+	@echo "✅ Linked .tmux.conf → $(TMUX_SOURCE)"
+
 
 	@ln -snf $(ZSHRC_SOURCE) $(ZSHRC_FILE)
 	@echo "✅ Linked .zshrc → $(ZSHRC_SOURCE)"
