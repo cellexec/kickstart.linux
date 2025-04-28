@@ -164,6 +164,12 @@ install-fonts:
 	else \
 		echo "✅ unzip is already installed."; \
 	fi
+	@if ! command -v fc-cache >/dev/null 2>&1; then \
+		echo "📦 Installing fontconfig (for fc-cache)..."; \
+		sudo apt-get update && sudo apt-get install -y fontconfig; \
+	else \
+		echo "✅ fontconfig (fc-cache) is already installed."; \
+	fi
 	@mkdir -p $(FONTS_DIR) $(TEMP_DIR)
 	@curl -Lo $(HACK_FONT_ZIP) $(HACK_FONT_URL)
 	@unzip -o $(HACK_FONT_ZIP) -d $(FONTS_DIR)
