@@ -158,6 +158,12 @@ install-fonts:
 	@echo "\n\n\n\n🔡 ====================================="
 	@echo "🔡 ===    Installing Hack Nerd Font  ==="
 	@echo "🔡 =====================================\n"
+	@if ! command -v unzip >/dev/null 2>&1; then \
+		echo "📦 Installing unzip..."; \
+		sudo apt-get update && sudo apt-get install -y unzip; \
+	else \
+		echo "✅ unzip is already installed."; \
+	fi
 	@mkdir -p $(FONTS_DIR) $(TEMP_DIR)
 	@curl -Lo $(HACK_FONT_ZIP) $(HACK_FONT_URL)
 	@unzip -o $(HACK_FONT_ZIP) -d $(FONTS_DIR)
