@@ -7,8 +7,20 @@ KICKSTART_DIR := $(HOME)/projects/kickstart.linux
 BIN_DIR := $(KICKSTART_DIR)/bin
 TEMP_DIR := $(KICKSTART_DIR)/temp
 
+# 📦 Architecture Detection
+ARCH := $(shell uname -m)
+ifeq ($(ARCH),x86_64)
+    PLATFORM_ARCH := amd64
+    BINARY_ARCH := x86_64
+else ifeq ($(ARCH),aarch64)
+    PLATFORM_ARCH := arm64
+    BINARY_ARCH := arm64
+else
+    $(error Unsupported architecture: $(ARCH))
+endif
+
 # 📦 Neovim
-NVIM_URL := https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+NVIM_URL := https://github.com/neovim/neovim/releases/latest/download/nvim-linux-$(BINARY_ARCH).tar.gz
 NVIM_TEMP_EXTRACT := $(TEMP_DIR)/nvim
 NVIM_TEMP_ARCHIVE := $(TEMP_DIR)/nvim.tar.gz
 NVIM_TARGET_DIR := $(BIN_DIR)/nvim
@@ -16,22 +28,21 @@ NVIM_BINARY := $(NVIM_TARGET_DIR)/bin/nvim
 
 # 📦 Tmux
 TPM_URL := https://github.com/tmux-plugins/tpm
-TPM_TARGET := ~/.tmux/plugins/tpm
+TPM_TARGET := $(HOME)/.tmux/plugins/tpm
 TMUX_FILE := $(HOME)/.tmux.conf
 TMUX_SOURCE := $(KICKSTART_DIR)/tmux/.tmux.conf
 
 # 📦 fzf
-FZF_VERSION := 0.61.2
-FZF_TAG := v$(FZF_VERSION)
-FZF_FILE := fzf-$(FZF_VERSION)-linux_amd64.tar.gz
-FZF_URL := https://github.com/junegunn/fzf/releases/download/$(FZF_TAG)/$(FZF_FILE)
+FZF_VERSION := 0.61.3
+FZF_FILE := fzf-$(FZF_VERSION)-linux_$(PLATFORM_ARCH).tar.gz
+FZF_URL := https://github.com/junegunn/fzf/releases/download/v$(FZF_VERSION)/$(FZF_FILE)
 FZF_TEMP_EXTRACT := $(TEMP_DIR)/fzf
 FZF_TARGET_DIR := $(BIN_DIR)/fzf
 FZF_BINARY := $(FZF_TARGET_DIR)/fzf
 
 # 📦 k9s
 K9S_VERSION := 0.50.4
-K9S_FILE := k9s_Linux_amd64.tar.gz
+K9S_FILE := k9s_Linux_$(PLATFORM_ARCH).tar.gz
 K9S_URL := https://github.com/derailed/k9s/releases/download/v$(K9S_VERSION)/$(K9S_FILE)
 K9S_TEMP_EXTRACT := $(TEMP_DIR)/k9s
 K9S_TARGET_DIR := $(BIN_DIR)/k9s
@@ -48,8 +59,8 @@ P10K_FILE := $(HOME)/.p10k.zsh
 P10K_SOURCE := $(KICKSTART_DIR)/zsh/.p10k.zsh
 
 # 📦 Flux CLI
-FLUX_VERSION := 2.2.3
-FLUX_FILE := flux_$(FLUX_VERSION)_linux_amd64.tar.gz
+FLUX_VERSION := 2.5.1
+FLUX_FILE := flux_$(FLUX_VERSION)_linux_$(PLATFORM_ARCH).tar.gz
 FLUX_URL := https://github.com/fluxcd/flux2/releases/download/v$(FLUX_VERSION)/$(FLUX_FILE)
 FLUX_TEMP_EXTRACT := $(TEMP_DIR)/flux
 FLUX_TARGET_DIR := $(BIN_DIR)/flux
@@ -60,12 +71,12 @@ FONTS_DIR := $(HOME)/.local/share/fonts
 HACK_FONT_URL := https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
 HACK_FONT_ZIP := $(TEMP_DIR)/Hack.zip
 
-.PHONY: all install install-nvim install-fzf install-gitconfig install-zsh install-fonts clean link path
+# 🛠️ Targets
+.PHONY: all install install-nvim install-fzf install-gitconfig install-zsh install-fonts install-tmux install-flux install-k9s clean link path
 
 all: install link
 
 install: install-nvim install-fzf install-tmux install-gitconfig install-zsh install-fonts install-flux install-k9s
-
 
 install-nvim:
 	@echo "\n\n\n\n🔧 ====================================="
@@ -76,7 +87,7 @@ install-nvim:
 	@rm -rf $(NVIM_TEMP_EXTRACT) $(NVIM_TARGET_DIR)
 	@mkdir -p $(NVIM_TEMP_EXTRACT)
 	@tar -xzf $(NVIM_TEMP_ARCHIVE) -C $(NVIM_TEMP_EXTRACT)
-	@mv $(NVIM_TEMP_EXTRACT)/nvim-linux-x86_64 $(NVIM_TARGET_DIR)
+	@mv $(NVIM_TEMP_EXTRACT)/nvim-$(BINARY_ARCH) $(NVIM_TARGET_DIR) || mv $(NVIM_TEMP_EXTRACT)/nvim-linux-$(BINARY_ARCH) $(NVIM_TARGET_DIR)
 	@chmod +x $(NVIM_BINARY)
 	@rm -rf $(NVIM_TEMP_ARCHIVE) $(NVIM_TEMP_EXTRACT)
 	@echo "✅ Neovim installed at $(NVIM_BINARY)"
@@ -91,14 +102,12 @@ install-tmux:
 	else \
 		echo "✅ Tmux is already installed."; \
 	fi
-
 	@if [ ! -d "$(TPM_TARGET)" ]; then \
 		echo "📦 Installing TPM (Tmux Plugin Manager)..."; \
 		git clone $(TPM_URL) $(TPM_TARGET); \
 	else \
 		echo "✅ TPM is already installed at $(TPM_TARGET)."; \
 	fi
-
 
 install-fzf:
 	@echo "\n\n\n\n🔧 ====================================="
@@ -140,7 +149,7 @@ install-zsh:
 	if [ "$$CURRENT_SHELL" != "$$ZSH_PATH" ]; then \
 		echo "🔁 Changing default shell to $$ZSH_PATH..."; \
 		chsh -s "$$ZSH_PATH"; \
-		echo "🔔 Please log out and back in again to start using zsh as your shell."; \
+		echo "🔔 Please log out and back in again to start using zsh."; \
 	else \
 		echo "✅ Zsh is already the default shell."; \
 	fi
@@ -170,7 +179,6 @@ install-flux:
 	@rm -rf $(TEMP_DIR)/$(FLUX_FILE) $(FLUX_TEMP_EXTRACT)
 	@echo "✅ Flux installed at $(FLUX_BINARY)"
 
-
 install-k9s:
 	@echo "\n\n\n\n🔧 ====================================="
 	@echo "🔧 ===        Installing k9s         ==="
@@ -199,26 +207,13 @@ link:
 	@echo "\n\n\n\n🔗 ====================================="
 	@echo "🔗 ===        Linking Configs        ==="
 	@echo "🔗 =====================================\n"
-
 	@mkdir -p $(HOME)/.config
-
 	@ln -snf $(KICKSTART_DIR)/nvim $(HOME)/.config/nvim
-	@echo "✅ Linked nvim config contents → ~/.config/nvim/"
-
-	@mkdir -p $(HOME)/.config/kitty
 	@ln -snf $(KICKSTART_DIR)/kitty/kitty.conf $(HOME)/.config/kitty/kitty.conf
-	@echo "✅ Linked kitty config: ~/.config/kitty/kitty.conf → $(KICKSTART_DIR)/kitty/kitty.conf"
-
-	@mkdir -p $(HOME)/.config
 	@ln -snf $(TMUX_SOURCE) $(TMUX_FILE)
-	@echo "✅ Linked .tmux.conf → $(TMUX_SOURCE)"
-
-
 	@ln -snf $(ZSHRC_SOURCE) $(ZSHRC_FILE)
-	@echo "✅ Linked .zshrc → $(ZSHRC_SOURCE)"
-
 	@ln -snf $(P10K_SOURCE) $(P10K_FILE)
-	@echo "✅ Linked .p10k.zsh → $(P10K_SOURCE)"
+	@echo "✅ Configs linked."
 
 path:
 	@echo "\n\n\n\n📂 ====================================="
