@@ -13,6 +13,14 @@ return {
 	config = function()
 		vim.keymap.set('n', '<leader>e', ":Neotree toggle<CR>", { silent = true })
 		require("neo-tree").setup({
+			filesystem = {
+				filtered_items = {
+					visible = true,
+					show_hidden_count = true,
+					hide_dotfiles = false,
+					hide_gitignored = false,
+				},
+			},
 			event_handlers = {
 				{
 					event = 'after_render',
