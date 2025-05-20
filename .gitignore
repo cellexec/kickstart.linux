@@ -1,4 +1,5 @@
 # Ignore downloaded binaries / artefacts
 /bin/
 /temp/
+/logs/
 
