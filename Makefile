@@ -219,7 +219,7 @@ link:
 	@echo "\n\n\n\n🔗 ====================================="
 	@echo "🔗 ===        Linking Configs        ==="
 	@echo "🔗 =====================================\n"
-	@mkdir -p $(HOME)/.config
+	@mkdir -p $(HOME)/.config/kitty/kitty.conf
 	@ln -snf $(KICKSTART_DIR)/nvim $(HOME)/.config/nvim
 	@ln -snf $(KICKSTART_DIR)/kitty/kitty.conf $(HOME)/.config/kitty/kitty.conf
 	@ln -snf $(TMUX_SOURCE) $(TMUX_FILE)
