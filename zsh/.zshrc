@@ -69,6 +69,7 @@ export EDITOR="$VISUAL"
 
 
 # Program alias
+alias k="kubectl"
 alias gl="git log --decorate --oneline --graph"
 alias ls="ls --color"
 alias ll="ls -la"
