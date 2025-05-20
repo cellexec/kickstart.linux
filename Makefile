@@ -76,7 +76,20 @@ HACK_FONT_ZIP := $(TEMP_DIR)/Hack.zip
 
 all: install link
 
-install: install-nvim install-fzf install-tmux install-gitconfig install-zsh install-fonts install-flux install-k9s
+install: install-build-essentials install-nvim install-fzf install-tmux install-gitconfig install-zsh install-fonts install-flux install-k9s
+
+install-build-essentials:
+	@echo "\n\n\n\n🔧 ====================================="
+	@echo "🔧 ===         Build Essential      ==="
+	@echo "🔧 =====================================\n"
+	@echo "✅ Build Essential installed."
+
+	@if ! command -v gcc >/dev/null 2>&1; then \
+		echo "📦 Installing Build Essential..."; \
+		sudo apt-get update && sudo apt-get install -y build-essential; \
+	else \
+		echo "✅ Build Essential is already installed."; \
+	fi
 
 install-nvim:
 	@echo "\n\n\n\n🔧 ====================================="
