@@ -37,7 +37,7 @@ FZF_VERSION := 0.61.3
 FZF_FILE := fzf-$(FZF_VERSION)-linux_$(PLATFORM_ARCH).tar.gz
 FZF_URL := https://github.com/junegunn/fzf/releases/download/v$(FZF_VERSION)/$(FZF_FILE)
 FZF_TEMP_EXTRACT := $(TEMP_DIR)/fzf
-FZF_TARGET_DIR := $(BIN_DIR)/fzf
+FZF_TARGET_DIR := $(BIN_DIR)
 FZF_BINARY := $(FZF_TARGET_DIR)/fzf
 
 # 📦 k9s
@@ -45,7 +45,7 @@ K9S_VERSION := 0.50.4
 K9S_FILE := k9s_Linux_$(PLATFORM_ARCH).tar.gz
 K9S_URL := https://github.com/derailed/k9s/releases/download/v$(K9S_VERSION)/$(K9S_FILE)
 K9S_TEMP_EXTRACT := $(TEMP_DIR)/k9s
-K9S_TARGET_DIR := $(BIN_DIR)/k9s
+K9S_TARGET_DIR := $(BIN_DIR)
 K9S_BINARY := $(K9S_TARGET_DIR)/k9s
 
 # ⚙️ Git
@@ -63,7 +63,7 @@ FLUX_VERSION := 2.5.1
 FLUX_FILE := flux_$(FLUX_VERSION)_linux_$(PLATFORM_ARCH).tar.gz
 FLUX_URL := https://github.com/fluxcd/flux2/releases/download/v$(FLUX_VERSION)/$(FLUX_FILE)
 FLUX_TEMP_EXTRACT := $(TEMP_DIR)/flux
-FLUX_TARGET_DIR := $(BIN_DIR)/flux
+FLUX_TARGET_DIR := $(BIN_DIR)
 FLUX_BINARY := $(FLUX_TARGET_DIR)/flux
 
 # 📦 Kind
@@ -131,7 +131,7 @@ install-fzf:
 	@echo "\n\n\n\n🔧 ====================================="
 	@echo "🔧 ===             Installing fzf     ==="
 	@echo "🔧 =====================================\n"
-	@mkdir -p $(TEMP_DIR) $(BIN_DIR) $(FZF_TARGET_DIR)
+	@mkdir -p $(TEMP_DIR) $(BIN_DIR)
 	@curl -L $(FZF_URL) -o $(TEMP_DIR)/$(FZF_FILE)
 	@rm -rf $(FZF_TEMP_EXTRACT)
 	@mkdir -p $(FZF_TEMP_EXTRACT)
@@ -199,7 +199,7 @@ install-flux:
 	@echo "\n\n\n\n🔧 ====================================="
 	@echo "🔧 ===           Installing Flux CD   ==="
 	@echo "🔧 =====================================\n"
-	@mkdir -p $(TEMP_DIR) $(FLUX_TARGET_DIR)
+	@mkdir -p $(TEMP_DIR) $(BIN_DIR)
 	@curl -Lo $(TEMP_DIR)/$(FLUX_FILE) $(FLUX_URL)
 	@rm -rf $(FLUX_TEMP_EXTRACT)
 	@mkdir -p $(FLUX_TEMP_EXTRACT)
@@ -213,7 +213,7 @@ install-k9s:
 	@echo "\n\n\n\n🔧 ====================================="
 	@echo "🔧 ===           Installing k9s       ==="
 	@echo "🔧 =====================================\n"
-	@mkdir -p $(TEMP_DIR) $(K9S_TARGET_DIR)
+	@mkdir -p $(TEMP_DIR) $(BIN_DIR)
 	@curl -Lo $(TEMP_DIR)/$(K9S_FILE) $(K9S_URL)
 	@rm -rf $(K9S_TEMP_EXTRACT)
 	@mkdir -p $(K9S_TEMP_EXTRACT)
@@ -258,4 +258,4 @@ path:
 	@echo "\n\n\n\n📂 ====================================="
 	@echo "📂 ===           PATH Setup (dev)     ==="
 	@echo "📂 =====================================\n"
-	@echo '📂 export PATH="$(NVIM_TARGET_DIR)/bin:$(FZF_TARGET_DIR):$(BIN_DIR):$$PATH"'
+	@echo '📂 export PATH="$(NVIM_TARGET_DIR)/bin:$(BIN_DIR):$$PATH"'
