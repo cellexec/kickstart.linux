@@ -1,6 +1,6 @@
-#  ============================================
-#  ===         💻 Kickstart.Linux           ===
-#  ============================================
+# ============================================
+# ===           💻 Kickstart.Linux          ===
+# ============================================
 
 # 📁 Base Directories
 KICKSTART_DIR := $(HOME)/projects/kickstart.linux
@@ -66,24 +66,29 @@ FLUX_TEMP_EXTRACT := $(TEMP_DIR)/flux
 FLUX_TARGET_DIR := $(BIN_DIR)/flux
 FLUX_BINARY := $(FLUX_TARGET_DIR)/flux
 
+# 📦 Kind
+KIND_VERSION := 0.28.0
+KIND_FILE := kind-linux-$(PLATFORM_ARCH)
+KIND_URL := https://kind.sigs.k8s.io/dl/v$(KIND_VERSION)/$(KIND_FILE)
+KIND_TARGET_DIR := $(BIN_DIR)
+KIND_BINARY := $(KIND_TARGET_DIR)/kind
+
 # 🔡 Fonts
 FONTS_DIR := $(HOME)/.local/share/fonts
 HACK_FONT_URL := https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
 HACK_FONT_ZIP := $(TEMP_DIR)/Hack.zip
 
 # 🛠️ Targets
-.PHONY: all install install-nvim install-fzf install-gitconfig install-zsh install-fonts install-tmux install-flux install-k9s clean link path
+.PHONY: all install install-nvim install-fzf install-gitconfig install-zsh install-fonts install-tmux install-flux install-k9s install-kind clean link path
 
 all: install link
 
-install: install-build-essentials install-nvim install-fzf install-tmux install-gitconfig install-zsh install-fonts install-flux install-k9s
+install: install-build-essentials install-nvim install-fzf install-tmux install-gitconfig install-zsh install-fonts install-flux install-k9s install-kind
 
 install-build-essentials:
 	@echo "\n\n\n\n🔧 ====================================="
-	@echo "🔧 ===         Build Essential      ==="
+	@echo "🔧 ===           Build Essential      ==="
 	@echo "🔧 =====================================\n"
-	@echo "✅ Build Essential installed."
-
 	@if ! command -v gcc >/dev/null 2>&1; then \
 		echo "📦 Installing Build Essential..."; \
 		sudo apt-get update && sudo apt-get install -y build-essential; \
@@ -93,7 +98,7 @@ install-build-essentials:
 
 install-nvim:
 	@echo "\n\n\n\n🔧 ====================================="
-	@echo "🔧 ===         Installing Neovim     ==="
+	@echo "🔧 ===           Installing Neovim    ==="
 	@echo "🔧 =====================================\n"
 	@mkdir -p $(TEMP_DIR) $(BIN_DIR)
 	@curl -L $(NVIM_URL) -o $(NVIM_TEMP_ARCHIVE)
@@ -107,7 +112,7 @@ install-nvim:
 
 install-tmux:
 	@echo "\n\n\n\n🔧 ====================================="
-	@echo "🔧 ===          Installing Tmux      ==="
+	@echo "🔧 ===           Installing Tmux      ==="
 	@echo "🔧 =====================================\n"
 	@if ! command -v tmux >/dev/null 2>&1; then \
 		echo "📦 Installing tmux..."; \
@@ -124,7 +129,7 @@ install-tmux:
 
 install-fzf:
 	@echo "\n\n\n\n🔧 ====================================="
-	@echo "🔧 ===            Installing fzf     ==="
+	@echo "🔧 ===             Installing fzf     ==="
 	@echo "🔧 =====================================\n"
 	@mkdir -p $(TEMP_DIR) $(BIN_DIR) $(FZF_TARGET_DIR)
 	@curl -L $(FZF_URL) -o $(TEMP_DIR)/$(FZF_FILE)
@@ -138,7 +143,7 @@ install-fzf:
 
 install-gitconfig:
 	@echo "\n\n\n\n🔧 ====================================="
-	@echo "🔧 ===        Setting up Git config  ==="
+	@echo "🔧 ===         Setting up Git config  ==="
 	@echo "🔧 =====================================\n"
 	@if [ -f $(GITCONFIG_FILE) ]; then \
 		echo "🔁 Existing .gitconfig found. Replacing with symlink..."; \
@@ -149,7 +154,7 @@ install-gitconfig:
 
 install-zsh:
 	@echo "\n\n\n\n🐚 ====================================="
-	@echo "🐚 ===        Installing Zsh         ==="
+	@echo "🐚 ===           Installing Zsh       ==="
 	@echo "🐚 =====================================\n"
 	@if ! command -v zsh >/dev/null 2>&1; then \
 		echo "📦 Installing zsh..."; \
@@ -169,7 +174,7 @@ install-zsh:
 
 install-fonts:
 	@echo "\n\n\n\n🔡 ====================================="
-	@echo "🔡 ===    Installing Hack Nerd Font  ==="
+	@echo "🔡 ===   Installing Hack Nerd Font    ==="
 	@echo "🔡 =====================================\n"
 	@if ! command -v unzip >/dev/null 2>&1; then \
 		echo "📦 Installing unzip..."; \
@@ -192,7 +197,7 @@ install-fonts:
 
 install-flux:
 	@echo "\n\n\n\n🔧 ====================================="
-	@echo "🔧 ===        Installing Flux CD     ==="
+	@echo "🔧 ===           Installing Flux CD   ==="
 	@echo "🔧 =====================================\n"
 	@mkdir -p $(TEMP_DIR) $(FLUX_TARGET_DIR)
 	@curl -Lo $(TEMP_DIR)/$(FLUX_FILE) $(FLUX_URL)
@@ -206,7 +211,7 @@ install-flux:
 
 install-k9s:
 	@echo "\n\n\n\n🔧 ====================================="
-	@echo "🔧 ===        Installing k9s         ==="
+	@echo "🔧 ===           Installing k9s       ==="
 	@echo "🔧 =====================================\n"
 	@mkdir -p $(TEMP_DIR) $(K9S_TARGET_DIR)
 	@curl -Lo $(TEMP_DIR)/$(K9S_FILE) $(K9S_URL)
@@ -218,9 +223,18 @@ install-k9s:
 	@rm -rf $(TEMP_DIR)/$(K9S_FILE) $(K9S_TEMP_EXTRACT)
 	@echo "✅ k9s installed at $(K9S_BINARY)"
 
+install-kind:
+	@echo "\n\n\n\n🐳 ====================================="
+	@echo "🐳 ===           Installing Kind      ==="
+	@echo "🐳 =====================================\n"
+	@mkdir -p $(KIND_TARGET_DIR)
+	@curl -Lo $(KIND_BINARY) $(KIND_URL)
+	@chmod +x $(KIND_BINARY)
+	@echo "✅ Kind installed at $(KIND_BINARY)"
+
 clean:
 	@echo "\n\n\n\n🧹 ====================================="
-	@echo "🧹 ===           Cleaning Up        ==="
+	@echo "🧹 ===             Cleaning Up        ==="
 	@echo "🧹 =====================================\n"
 	@echo "🧹 Removing binaries in $(BIN_DIR)"
 	@echo "🧹 Removing temporary files in $(TEMP_DIR)"
@@ -230,9 +244,9 @@ clean:
 
 link:
 	@echo "\n\n\n\n🔗 ====================================="
-	@echo "🔗 ===        Linking Configs        ==="
+	@echo "🔗 ===           Linking Configs      ==="
 	@echo "🔗 =====================================\n"
-	@mkdir -p $(HOME)/.config/kitty/kitty.conf
+	@mkdir -p $(HOME)/.config/kitty
 	@ln -snf $(KICKSTART_DIR)/nvim $(HOME)/.config/nvim
 	@ln -snf $(KICKSTART_DIR)/kitty/kitty.conf $(HOME)/.config/kitty/kitty.conf
 	@ln -snf $(TMUX_SOURCE) $(TMUX_FILE)
@@ -242,7 +256,6 @@ link:
 
 path:
 	@echo "\n\n\n\n📂 ====================================="
-	@echo "📂 ===        PATH Setup (dev)      ==="
+	@echo "📂 ===           PATH Setup (dev)     ==="
 	@echo "📂 =====================================\n"
-	@echo '📂 export PATH="$(NVIM_TARGET_DIR)/bin:$(FZF_TARGET_DIR):$$PATH"'
-
+	@echo '📂 export PATH="$(NVIM_TARGET_DIR)/bin:$(FZF_TARGET_DIR):$(BIN_DIR):$$PATH"'
