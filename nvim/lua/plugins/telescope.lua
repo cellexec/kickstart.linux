@@ -1,4 +1,4 @@
--- Find, Filter, Preview, Pick
+-- Find, Filter, Preview, Pic-- Find, Filter, Preview, Pick
 -- https://github.com/nvim-telescope/telescope.nvim
 local default = {
 	theme = "dropdown",
@@ -54,14 +54,36 @@ return {
 					themes.get_dropdown(),
 				},
 			},
-			pickers = {},
+			pickers = {
+				find_files = {
+					theme = default.theme,
+					layout_config = default.layout,
+					hidden = true, -- include hidden files
+					file_ignore_patterns = { "%.git/", "node_modules/", "%.venv/" },
+				},
+				live_grep = {
+					theme = default.theme,
+					layout_config = default.layout,
+					additional_args = function()
+						return {
+							"--hidden", -- include hidden files
+							"--glob", "!.git/",
+							"--glob", "!node_modules/",
+							"--glob", "!.venv/",
+						}
+					end,
+				},
+			},
 		}
 
+		-- Apply defaults to other pickers
 		for _, picker_name in ipairs(default_pickers) do
-			options.pickers[picker_name] = {
-				theme = default.theme,
-				layout_config = default.layout,
-			}
+			if not options.pickers[picker_name] then
+				options.pickers[picker_name] = {
+					theme = default.theme,
+					layout_config = default.layout,
+				}
+			end
 		end
 
 		telescope.setup(options)
