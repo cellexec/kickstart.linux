@@ -1,24 +1,23 @@
 # 💻 kickstart.linux
 
-Your personal Linux dotfiles and system bootstrapper — easy to install, modular, and minimal.
+**kickstart.linux** is a lightweight, opinionated, and modular **dotfile and system bootstrapping solution** for Linux. It uses a `Makefile` to automate the installation of essential CLI tools, configure your shell, set up Neovim, and symlink your personal dotfiles, ensuring a consistent development environment across your machines.
 
-> 📂 Powered by `Makefile`, this setup automates installing CLI tools, configuring your shell, setting up Neovim, and linking your preferred dotfiles.
+-----
 
----
+## ✨ Features
 
-## 📦 Features
+  * **Modular & Minimal:** Focused on core tools with a clean, easy-to-understand structure.
+  * **Automated Setup:** Installs CLI applications like Neovim, fzf, Flux CLI, k9s, and Kind.
+  * **Shell Configuration:** Sets up Zsh with the popular Powerlevel10k theme.
+  * **Dotfile Management:** Symlinks essential configuration files for Git, Neovim, Kitty, and Zsh.
+  * **Font Installation:** Includes automatic installation of the Hack Nerd Font for a rich terminal experience.
+  * **Local Installation:** Tools are installed to a local `bin/` directory, minimizing system-wide changes.
 
-- 🧠 Opinionated but flexible structure
-- 🐚 Zsh with [powerlevel10k](https://github.com/romkatv/powerlevel10k) theme
-- 📝 Neovim installation and config symlinking
-- 🔍 fzf fuzzy finder binary install
-- 🧠 Git configuration linking
-- 🔡 Hack Nerd Font installer
-- ⚙️ Minimal dependencies — just `make`, `curl`, and `tar`
+-----
 
----
+## 🚀 Get Started
 
-## 🚀 Quickstart
+Clone the repository and run `make`:
 
 ```bash
 git clone https://github.com/yourusername/kickstart.linux.git ~/projects/kickstart.linux
@@ -26,69 +25,62 @@ cd ~/projects/kickstart.linux
 make
 ```
 
-That’s it! It will:
+This command will:
 
-- Install Neovim and fzf locally under `bin/`
-- Symlink configs like `.zshrc`, `.gitconfig`, and Neovim/Kitty configs
-- Install Hack Nerd Font to `~/.local/share/fonts`
+  * Install all specified CLI tools (Neovim, fzf, Flux, k9s, Kind) into `~/projects/kickstart.linux/bin/`.
+  * Symlink your configuration files (e.g., `.zshrc`, `.gitconfig`, Neovim, Kitty) to their respective home directories.
+  * Install the Hack Nerd Font.
 
----
+-----
 
-## 🛠 Commands
+## 🛠 Usage
 
-| Command       | Description                                  |
-|---------------|----------------------------------------------|
-| `make`        | Install everything and link all configs      |
-| `make install`| Install tools (Neovim, fzf, fonts, etc.)     |
-| `make link`   | Symlink all configuration files              |
-| `make clean`  | Remove installed tools and temp files        |
-| `make path`   | Show local `$PATH` additions (for testing)   |
+Here are the primary `make` commands:
 
----
+| Command        | Description                                       |
+| :------------- | :------------------------------------------------ |
+| `make`         | Installs all tools and symlinks all configurations. |
+| `make install` | Installs all binaries and fonts.                  |
+| `make link`    | Symlinks all configuration files.                 |
+| `make clean`   | Removes all installed tools and temporary files.   |
+| `make path`    | Displays the recommended `$PATH` additions.       |
 
-## 📂 Directory Structure
+-----
 
-```text
+## 📂 Structure
+
+```
 kickstart.linux/
-├── Makefile
-├── nvim/               # Neovim config folder
-├── kitty/              # Kitty terminal config
-├── zsh/                # .zshrc and .p10k.zsh
-├── git/                # .gitconfig
-├── bin/                # (auto-generated) binaries go here
-├── temp/               # (auto-generated) temporary downloads
+├── Makefile            # The core automation script
+├── nvim/               # Neovim configuration files
+├── kitty/              # Kitty terminal configuration
+├── zsh/                # Zsh (.zshrc) and Powerlevel10k (.p10k.zsh) configs
+├── git/                # Git global configuration (.gitconfig)
+├── bin/                # (Auto-generated) Location for installed binaries
+└── temp/               # (Auto-generated) Temporary download directory
 ```
 
----
+-----
 
-## 🧹 Cleanup
+## ♻️ Cleanup
 
-To remove everything installed by the script:
+To revert all changes made by this kickstart:
 
 ```bash
 make clean
 ```
 
-This removes:
-- Local binaries (`bin/`)
-- Temporary files (`temp/`)
-- Your Neovim config symlink (`~/.config/nvim`)
+This command removes all locally installed binaries, temporary files, and dotfile symlinks.
 
----
+-----
 
-## 📎 Notes
+## 📝 Notes
 
-- No global system changes are made unless `zsh` is not installed or not the default shell (then it prompts `sudo`).
-- Add the following to your shell profile to test the installed binaries:
+  * This script primarily performs local installations. The only system-wide changes occur if `zsh` is not installed or not set as your default shell, which will prompt for `sudo`.
+  * Ensure `make`, `curl`, `tar`, and `unzip` are available on your system before running.
 
-```bash
-export PATH="$HOME/projects/kickstart.linux/bin/nvim/bin:$HOME/projects/kickstart.linux/bin/fzf:$PATH"
-```
-
----
+-----
 
 ## 📜 License
 
-MIT — use it freely, hack it wildly.
-
-
+This project is licensed under the MIT License. Feel free to use, modify, and distribute.
