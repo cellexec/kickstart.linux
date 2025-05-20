@@ -87,14 +87,30 @@ install: install-build-essentials install-nvim install-fzf install-tmux install-
 
 install-build-essentials:
 	@echo "\n\n\n\n🔧 ====================================="
-	@echo "🔧 ===           Build Essential      ==="
+	@echo "🔧 ===        Installing Prerequisites      ==="
 	@echo "🔧 =====================================\n"
+
 	@if ! command -v gcc >/dev/null 2>&1; then \
-		echo "📦 Installing Build Essential..."; \
+		echo "📦 Installing build-essential..."; \
 		sudo apt-get update && sudo apt-get install -y build-essential; \
 	else \
-		echo "✅ Build Essential is already installed."; \
+		echo "✅ build-essential is already installed."; \
 	fi
+
+	@if ! command -v curl >/dev/null 2>&1; then \
+		echo "📦 Installing curl..."; \
+		sudo apt-get update && sudo apt-get install -y curl; \
+	else \
+		echo "✅ curl is already installed."; \
+	fi
+
+	@if ! command -v tar >/dev/null 2>&1; then \
+		echo "📦 Installing tar..."; \
+		sudo apt-get update && sudo apt-get install -y tar; \
+	else \
+		echo "✅ tar is already installed."; \
+	fi
+	@echo "✅ All essential prerequisites checked/installed."
 
 install-nvim:
 	@echo "\n\n\n\n🔧 ====================================="
