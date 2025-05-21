@@ -1,4 +1,5 @@
 export TERM=xterm-256color
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
 # Enable Powerlevel10k
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
