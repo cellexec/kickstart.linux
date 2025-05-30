@@ -1,3 +1,6 @@
+# Rust
+. "$HOME/.cargo/env"
+
 export TERM=xterm-256color
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
