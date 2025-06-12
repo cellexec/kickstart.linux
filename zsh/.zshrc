@@ -1,3 +1,6 @@
+# Go
+export PATH="$(go env GOPATH)/bin:$PATH"
+
 # Rust
 . "$HOME/.cargo/env"
 
@@ -66,6 +69,7 @@ export PATH="$PATH:$HOME/projects/kickstart.linux/bin/k9s/"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/bin"
+export PATH="$PATH:/usr/local/go/bin"
 export PATH="$PATH:/usr/sbin"
 export PATH="$PATH:/usr/bin"
 export PATH="$PATH:/sbin"
