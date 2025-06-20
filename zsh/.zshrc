@@ -80,6 +80,7 @@ export EDITOR="$VISUAL"
 
 
 # Program alias
+alias ee="exit"
 alias k="kubectl"
 alias gl="git log --decorate --oneline --graph"
 alias ls="ls --color"
