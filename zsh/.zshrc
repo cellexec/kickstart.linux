@@ -91,9 +91,9 @@ alias tl="tmux list-session"
 alias ldk='lazydocker'
 
 # Command alias
-alias gacp="[ -d .git ] && git add . && git commit && git push origin $([ -d .git ] && git rev-parse --abbrev-ref HEAD)"
-alias gacpl="[ -d .git ] && git add . && git commit -m 'update' && git push origin $([ -d .git ] && git rev-parse --abbrev-ref HEAD)"
-alias gacpp="[ -d .git ] && git add . && git commit -m 'update Lazy Plugins' && git push origin $([ -d .git ] && git rev-parse --abbrev-ref HEAD)"
+alias gacp="[ -d .git ] && git add . && git commit && git pull && git push origin $([ -d .git ] && git rev-parse --abbrev-ref HEAD)"
+alias gacpl="[ -d .git ] && git add . && git commit -m 'update' && git pull && git push origin $([ -d .git ] && git rev-parse --abbrev-ref HEAD)"
+alias gacpp="[ -d .git ] && git add . && git commit -m 'update Lazy Plugins' && git pull && git push origin $([ -d .git ] && git rev-parse --abbrev-ref HEAD)"
 alias n='jq -r ".scripts | keys[]" package.json | fzf --prompt="Select a script: " | xargs -r npm run'
 alias reload="source ~/.zshrc"
 alias stop_all_docker='docker ps -aq | xargs docker stop'
