@@ -135,3 +135,14 @@ sssh() {
 }
 
 alias sssh="sssh"
+
+unalias p 2>/dev/null
+p() {
+  local dir
+  dir=$(find ~/projects/ -maxdepth 1 -type d | fzf)
+  if [ -n "$dir" ]; then
+    cd "$dir"
+  fi
+}
+
+alias p="p"
