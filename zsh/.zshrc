@@ -1,5 +1,6 @@
 # Go
 export PATH="$(go env GOPATH)/bin:$PATH"
+export GITLAB_TOKEN="fjsdklfjlsdk"
 
 # Rust
 . "$HOME/.cargo/env"
