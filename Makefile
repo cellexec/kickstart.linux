@@ -19,6 +19,14 @@ else
     $(error Unsupported architecture: $(ARCH))
 endif
 
+# 📦 GitLab CLI (glab)
+GLAB_VERSION := 1.62.0
+GLAB_FILE := glab_$(GLAB_VERSION)_linux_$(PLATFORM_ARCH).tar.gz
+GLAB_URL := https://gitlab.com/gitlab-org/cli/-/releases/v$(GLAB_VERSION)/downloads/$(GLAB_FILE)
+GLAB_TEMP_EXTRACT := $(TEMP_DIR)/glab
+GLAB_TARGET_DIR := $(BIN_DIR)
+GLAB_BINARY := $(GLAB_TARGET_DIR)/glab
+
 # 📦 Neovim
 NVIM_URL := https://github.com/neovim/neovim/releases/latest/download/nvim-linux-$(BINARY_ARCH).tar.gz
 NVIM_TEMP_EXTRACT := $(TEMP_DIR)/nvim
@@ -83,7 +91,7 @@ HACK_FONT_ZIP := $(TEMP_DIR)/Hack.zip
 
 all: install link
 
-install: install-build-essentials install-nvim install-fzf install-tmux install-gitconfig install-zsh install-fonts install-flux install-k9s install-kind
+install: install-build-essentials install-nvim install-fzf install-tmux install-gitconfig install-zsh install-fonts install-flux install-k9s install-kind install-glab
 
 install-build-essentials:
 	@echo "\n\n\n\n🔧 ====================================="
@@ -248,6 +256,20 @@ install-kind:
 	@chmod +x $(KIND_BINARY)
 	@echo "✅ Kind installed at $(KIND_BINARY)"
 
+install-glab:
+	@echo "\n\n\n\n🔧 ====================================="
+	@echo "🔧 ===           Installing glab       ==="
+	@echo "🔧 =====================================\n"
+	@mkdir -p $(TEMP_DIR) $(BIN_DIR)
+	@curl -Lo $(TEMP_DIR)/$(GLAB_FILE) $(GLAB_URL)
+	@rm -rf $(GLAB_TEMP_EXTRACT)
+	@mkdir -p $(GLAB_TEMP_EXTRACT)
+	@tar -xzf $(TEMP_DIR)/$(GLAB_FILE) -C $(GLAB_TEMP_EXTRACT)
+	@mv $(GLAB_TEMP_EXTRACT)/bin/glab $(GLAB_BINARY)
+	@chmod +x $(GLAB_BINARY)
+	@rm -rf $(TEMP_DIR)/$(GLAB_FILE) $(GLAB_TEMP_EXTRACT)
+	@echo "✅ glab installed at $(GLAB_BINARY)"
+
 clean:
 	@echo "\n\n\n\n🧹 ====================================="
 	@echo "🧹 ===             Cleaning Up        ==="
@@ -275,3 +297,4 @@ path:
 	@echo "📂 ===           PATH Setup (dev)     ==="
 	@echo "📂 =====================================\n"
 	@echo '📂 export PATH="$(NVIM_TARGET_DIR)/bin:$(BIN_DIR):$$PATH"'
+
