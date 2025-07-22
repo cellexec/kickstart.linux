@@ -1,6 +1,7 @@
+# TODO: Seperate Work / Private ?
 [user]
-	name = Cellexec
-	email = cellexec@outlook.com
+	name = Marcel Maier
+	email = marcel.maier@lit-beratung.com
 
 [core]
 	editor = nvim
