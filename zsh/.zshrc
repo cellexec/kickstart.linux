@@ -1,6 +1,6 @@
 # Go
 export PATH="$(go env GOPATH)/bin:$PATH"
-export GITLAB_TOKEN := $(shell echo Z2xwYXQtTk5Va1JTS0RuZFA1YndocUU0N2Q= | base64 -d)
+export GITLAB_HOST="https://gitlab.lit-beratung.de"
 
 # Rust
 . "$HOME/.cargo/env"
