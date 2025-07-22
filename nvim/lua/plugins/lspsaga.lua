@@ -29,5 +29,8 @@ return {
         vim.api.nvim_win_close(0, true)
       end
     end, { silent = true, desc = 'Close floating window' })
+
+    vim.keymap.set('n', '<leader>lr', '<cmd>Lspsaga rename<CR>', { silent = true, desc = 'Lspsaga rename' })
+    vim.keymap.set('n', '<leader>lo', '<cmd>Lspsaga outline<CR>', { silent = true, desc = 'Lspsaga outline' })
   end,
 }

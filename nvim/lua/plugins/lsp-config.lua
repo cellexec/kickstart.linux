@@ -42,11 +42,11 @@ return {
 				map('<leader>ld', function() vim.cmd('Lspsaga peek_definition') end, '[L]SP [D]efinition')
 				map('<leader>lf', function() vim.cmd('Lspsaga finder') end, '[L]SP [F]inder')
 				map('<leader>lt', function() vim.cmd('Lspsaga peek_type_definition') end, '[L]SP [T]ype')
+				map('<leader>K', function() vim.cmd('Lspsaga hover_doc') end, 'Hover Documentation')
 				map('<leader>ls', require('telescope.builtin').lsp_document_symbols, '[L]SP [S]ymbols')
 				map('<leader>lws', require('telescope.builtin').lsp_dynamic_workspace_symbols,
 					'[L]SP [Workspace] [S]ymbols')
 				map('<leader>lr', vim.lsp.buf.rename, '[R]ename')
-				map('K', vim.lsp.buf.hover, 'Hover Documentation')
 				map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
 				if client.supports_method("textDocument/formatting") then
@@ -79,12 +79,6 @@ return {
 							vim.api.nvim_clear_autocmds({ group = 'kickstart-lsp-highlight', buffer = event2.buf })
 						end,
 					})
-				end
-
-				if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-					map('<leader>lh', function()
-						vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-					end, '[L]SP [H]ints')
 				end
 			end,
 		})
