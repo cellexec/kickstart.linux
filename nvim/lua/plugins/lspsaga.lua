@@ -21,6 +21,13 @@ return {
       hover = {
         max_width = 80,
       },
+      outline = {
+        keys = {
+          toggle_or_jump = '<space>',
+          jump = '<CR>',
+          quit = '<Esc>',
+        },
+      },
     })
 
     -- Close floating windows with Esc
