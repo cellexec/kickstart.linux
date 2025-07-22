@@ -27,6 +27,7 @@ return {
           jump = '<CR>',
           quit = '<Esc>',
         },
+        close_after_jump = true,
       },
     })
 
