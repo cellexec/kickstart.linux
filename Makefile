@@ -37,8 +37,10 @@ NVIM_BINARY := $(NVIM_TARGET_DIR)/bin/nvim
 # 📦 Tmux
 TPM_URL := https://github.com/tmux-plugins/tpm
 TPM_TARGET := $(HOME)/.tmux/plugins/tpm
-TMUX_FILE := $(HOME)/.tmux.conf
-TMUX_SOURCE := $(KICKSTART_DIR)/tmux/.tmux.conf
+TMUX_CONFIG_SRC := $(KICKSTART_DIR)/tmux/.tmux.conf
+TMUX_CONFIG_DEST := $(HOME)/.tmux.conf
+TMUX_SCRIPT_SRC := $(KICKSTART_DIR)/tmux/new-k8s-window.sh
+TMUX_SCRIPT_DEST := $(HOME)/.tmux/new-k8s-window.sh
 
 # 📦 fzf
 FZF_VERSION := 0.61.3
@@ -55,6 +57,8 @@ K9S_URL := https://github.com/derailed/k9s/releases/download/v$(K9S_VERSION)/$(K
 K9S_TEMP_EXTRACT := $(TEMP_DIR)/k9s
 K9S_TARGET_DIR := $(BIN_DIR)
 K9S_BINARY := $(K9S_TARGET_DIR)/k9s
+K9S_CONFIG_SRC := $(KICKSTART_DIR)/k9s/config.yaml
+K9S_CONFIG_DEST := $(HOME)/.config/k9s/config.yaml
 
 # ⚙️ Git
 GITCONFIG_FILE := $(HOME)/.gitconfig
@@ -287,7 +291,9 @@ link:
 	@mkdir -p $(HOME)/.config/kitty
 	@ln -snf $(KICKSTART_DIR)/nvim $(HOME)/.config/nvim
 	@ln -snf $(KICKSTART_DIR)/kitty/kitty.conf $(HOME)/.config/kitty/kitty.conf
-	@ln -snf $(TMUX_SOURCE) $(TMUX_FILE)
+	@ln -snf $(TMUX_CONFIG_SRC) $(TMUX_CONFIG_DEST)
+	@ln -snf $(TMUX_SCRIPT_SRC) $(TMUX_SCRIPT_DEST)
+	@ln -snf $(K9S_SCRIPT_SRC) $(K9S_SCRIPT_DEST)
 	@ln -snf $(ZSHRC_SOURCE) $(ZSHRC_FILE)
 	@ln -snf $(P10K_SOURCE) $(P10K_FILE)
 	@echo "✅ Configs linked."
