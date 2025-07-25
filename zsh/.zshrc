@@ -112,9 +112,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-unalias sssh 2>/dev/null
+unalias s 2>/dev/null
 
-sssh() {
+s() {
     if [ $# -eq 0 ]; then
         # Extract host names from SSH config file
         # Remove comments, empty lines, and get only Host lines
@@ -135,7 +135,7 @@ sssh() {
     fi
 }
 
-alias sssh="sssh"
+alias s="s"
 
 unalias p 2>/dev/null
 p() {
