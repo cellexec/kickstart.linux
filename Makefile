@@ -51,7 +51,7 @@ FZF_TARGET_DIR := $(BIN_DIR)
 FZF_BINARY := $(FZF_TARGET_DIR)/fzf
 
 # 📦 k9s
-K9S_VERSION := 0.50.4
+K9S_VERSION := 0.50.6
 K9S_FILE := k9s_Linux_$(PLATFORM_ARCH).tar.gz
 K9S_URL := https://github.com/derailed/k9s/releases/download/v$(K9S_VERSION)/$(K9S_FILE)
 K9S_TEMP_EXTRACT := $(TEMP_DIR)/k9s
