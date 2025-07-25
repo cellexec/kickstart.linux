@@ -11,7 +11,7 @@ return {
 	lazy = false,
 	opts = {},
 	config = function()
-		vim.keymap.set('n', '<leader>e', ":Neotree toggle<CR>", { silent = true })
+		vim.keymap.set('n', '<leader>e', ":Neotree toggle reveal<CR>", { silent = true })
 		require("neo-tree").setup({
 			filesystem = {
 				filtered_items = {
