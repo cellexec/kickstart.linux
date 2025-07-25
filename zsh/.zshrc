@@ -87,6 +87,7 @@ alias gl="git log --decorate --oneline --graph"
 alias ls="ls --color"
 alias ll="ls -la"
 alias vim="nvim"
+alias ta="tmux attach"
 alias tk="tmux kill-session"
 alias tl="tmux list-session"
 alias ldk='lazydocker'
