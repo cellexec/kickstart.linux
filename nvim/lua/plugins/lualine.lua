@@ -3,12 +3,14 @@ return {
 	dependencies = { 'nvim-tree/nvim-web-devicons' },
 	config = function()
 		require('lualine').setup({
-			theme = 'gruvbox',
+			options = {
+				theme = 'onedark'
+			},
 			sections = {},
 			tabline = {
 				lualine_a = { 'mode' },
-				lualine_b = { 'filename' },
-				lualine_c = {},
+				lualine_b = { 'branch' },
+				lualine_c = { 'filename' },
 				lualine_x = { 'searchcount' },
 				lualine_y = { 'hostname' },
 				lualine_z = { 'lsp_status' },
