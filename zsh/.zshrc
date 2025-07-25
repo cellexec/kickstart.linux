@@ -81,6 +81,7 @@ export EDITOR="$VISUAL"
 
 
 # Program alias
+alias fr="flux reconcile kustomization flux-system -n flux-system --with-source"
 alias ee="exit"
 alias k="kubectl"
 alias gl="git log --decorate --oneline --graph"
