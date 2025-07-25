@@ -4,6 +4,7 @@ return {
 	config = function()
 		require('lualine').setup({
 			theme = 'gruvbox',
+			sections = {},
 			tabline = {
 				lualine_a = { 'mode' },
 				lualine_b = { 'filename' },
@@ -12,8 +13,8 @@ return {
 				lualine_y = { 'hostname' },
 				lualine_z = { 'lsp_status' },
 			},
-			sections = {},
 		})
 		vim.opt.showtabline = 2
+		vim.opt.laststatus = 0
 	end,
 }
