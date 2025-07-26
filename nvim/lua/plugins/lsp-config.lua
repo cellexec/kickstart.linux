@@ -36,17 +36,20 @@ return {
 					vim.keymap.set('n', keys, func, { buffer = event.buf, desc = desc })
 				end
 
-				map('<leader>lr', require('telescope.builtin').lsp_references, '[L]SP [R]eferences')
+				-- map('<leader>lr', vim.lsp.buf.rename, '[R]ename')
+				map('<leader>lr', function() vim.cmd('Lspsaga rename') end, '[R]ename')
+				map('<leader>lR', require('telescope.builtin').lsp_references, '[L]SP [R]eferences')
 				map('<leader>li', require('telescope.builtin').lsp_implementations, '[L]SP [I]mplementation')
 				map('<leader>la', function() vim.cmd('Lspsaga code_action') end, '[L]SP [A]ction')
 				map('<leader>ld', function() vim.cmd('Lspsaga peek_definition') end, '[L]SP [D]efinition')
+				map('<leader>lD', function() vim.cmd('Lspsaga peek_definition') end, '[L]SP [D]efinition')
+				map('<leader>lD', vim.lsp.buf.definition, '[R]ename')
 				map('<leader>lf', function() vim.cmd('Lspsaga finder') end, '[L]SP [F]inder')
 				map('<leader>lt', function() vim.cmd('Lspsaga peek_type_definition') end, '[L]SP [T]ype')
 				map('<leader>K', function() vim.cmd('Lspsaga hover_doc') end, 'Hover Documentation')
 				map('<leader>ls', require('telescope.builtin').lsp_document_symbols, '[L]SP [S]ymbols')
 				map('<leader>lws', require('telescope.builtin').lsp_dynamic_workspace_symbols,
 					'[L]SP [Workspace] [S]ymbols')
-				map('<leader>lr', vim.lsp.buf.rename, '[R]ename')
 				map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
 				if client.supports_method("textDocument/formatting") then
