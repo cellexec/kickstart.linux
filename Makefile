@@ -109,6 +109,13 @@ install-build-essentials:
 		echo "✅ build-essential is already installed."; \
 	fi
 
+	@if ! command -v rg >/dev/null 2>&1; then \
+		echo "📦 Installing ripgrep..."; \
+		sudo apt-get update && sudo apt-get install -y ripgrep; \
+	else \
+		echo "✅ curl is already installed."; \
+	fi
+
 	@if ! command -v curl >/dev/null 2>&1; then \
 		echo "📦 Installing curl..."; \
 		sudo apt-get update && sudo apt-get install -y curl; \
