@@ -1,10 +1,3 @@
-# Go
-export PATH="$(go env GOPATH)/bin:$PATH"
-export GITLAB_HOST="https://gitlab.lit-beratung.de"
-
-# Rust
-. "$HOME/.cargo/env"
-
 export TERM=xterm-256color
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
