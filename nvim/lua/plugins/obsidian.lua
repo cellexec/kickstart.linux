@@ -17,7 +17,6 @@ return {
 	opts = {
 		workspaces = {
 			{ name = 'private', path = '~/vaults/cellexec-vault/' },
-			{ name = 'work',    path = '~/vaults/work/' },
 		},
 		ui = { enable = false },
 	},
