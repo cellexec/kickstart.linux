@@ -293,7 +293,6 @@ link:
 	@ln -snf $(KICKSTART_DIR)/kitty/kitty.conf $(HOME)/.config/kitty/kitty.conf
 	@ln -snf $(TMUX_CONFIG_SRC) $(TMUX_CONFIG_DEST)
 	@ln -snf $(TMUX_SCRIPT_SRC) $(TMUX_SCRIPT_DEST)
-	@ln -snf $(K9S_CONFIG_SRC) $(K9S_CONFIG_DEST)
 	@ln -snf $(ZSHRC_SOURCE) $(ZSHRC_FILE)
 	@ln -snf $(P10K_SOURCE) $(P10K_FILE)
 	@echo "✅ Configs linked."
