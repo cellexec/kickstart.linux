@@ -102,6 +102,13 @@ install-build-essentials:
 	@echo "🔧 ===        Installing Prerequisites      ==="
 	@echo "🔧 =====================================\n"
 
+	@if ! command -v node >/dev/null 2>&1; then \
+		echo "📦 Installing nodejs..."; \
+		sudo apt-get update && sudo apt-get install -y nodejs npm; \
+	else \
+		echo "✅ nodejs is already installed."; \
+	fi
+
 	@if ! command -v gcc >/dev/null 2>&1; then \
 		echo "📦 Installing build-essential..."; \
 		sudo apt-get update && sudo apt-get install -y build-essential; \
@@ -113,7 +120,7 @@ install-build-essentials:
 		echo "📦 Installing ripgrep..."; \
 		sudo apt-get update && sudo apt-get install -y ripgrep; \
 	else \
-		echo "✅ curl is already installed."; \
+		echo "✅ ripgrep is already installed."; \
 	fi
 
 	@if ! command -v curl >/dev/null 2>&1; then \
