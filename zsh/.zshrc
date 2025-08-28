@@ -85,6 +85,7 @@ alias ta="tmux attach"
 alias tk="tmux kill-session"
 alias tl="tmux list-session"
 alias ldk='lazydocker'
+alias rmall="rm -rf ./* && rm -rf ./.*"
 
 # Command alias
 alias gacp="[ -d .git ] && git add . && git commit && git pull && git push"
