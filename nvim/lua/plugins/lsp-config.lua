@@ -61,7 +61,7 @@ return {
 					})
 				end
 
-				if client.server_capabilities.documentHighlightProvider then
+				if client.server_capabilities.documentHighlightProvider and vim.bo[args.buf].filetype ~= 'markdown' then
 					local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
 					vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
 						buffer = event.buf,
