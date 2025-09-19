@@ -55,6 +55,7 @@ zstyle ':completions:*' list-colors '${(s.:.)LS_COLORS}'
 ################
 
 # Extend Path variables
+export PATH="$PATH:$HOME/projects/kickstart.linux/lazydocker/"
 export PATH="$PATH:$HOME/projects/kickstart.linux/bin/"
 export PATH="$PATH:$HOME/projects/kickstart.linux/bin/nvim/bin"
 export PATH="$PATH:$HOME/projects/kickstart.linux/bin/flux/"
@@ -86,12 +87,16 @@ alias tk="tmux kill-session"
 alias tl="tmux list-session"
 alias ldk='lazydocker'
 alias rmall="rm -rf ./* && rm -rf ./.*"
+alias docker-cleanall='docker stop $(docker ps -aq) 2>/dev/null && docker rm $(docker ps -aq) 2>/dev/null && docker rmi -f $(docker images -q) 2>/dev/null'
 
 # Command alias
 alias gacp="[ -d .git ] && git add . && git commit && git pull && git push"
 alias gacpl="[ -d .git ] && git add . && git commit -m 'update' && git pull && git push"
 alias gacpp="[ -d .git ] && git add . && git commit -m 'update Lazy Plugins' && git pull && git push"
-alias n='jq -r ".scripts | keys[]" package.json | fzf --prompt="Select a script: " | xargs -r npm run'
+alias n='
+SCRIPT=$(jq -r ".scripts | keys[]" package.json | fzf --prompt="Select a script: ") && \
+[ -n "$SCRIPT" ] && npm run "$SCRIPT"
+'
 alias reload="source ~/.zshrc"
 alias stop_all_docker='docker ps -aq | xargs docker stop'
 alias vaults='cd $(find ~/vaults/ -maxdepth 1 -mindepth 1 -type d | sed "s|^\./||" | fzf) && vim'
