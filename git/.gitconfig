@@ -8,3 +8,5 @@
 
 [pull]
 	rebase = true
+[alias]
+	new = "!f() { git checkout -b \"$1\" && git push -u origin \"$1\"; }; f"
