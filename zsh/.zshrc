@@ -148,3 +148,16 @@ p() {
 }
 
 alias p="p"
+
+unalias gsw 2>/dev/null
+gsw() {
+  local branch
+  branch=$(git branch --all --color=never | sed 's/^..//' | grep -v 'HEAD' | sort -u | fzf --prompt="Switch to branch: ")
+  if [[ -n "$branch" ]]; then
+    # Remove remote prefix if present (like "remotes/origin/foo")
+    branch=${branch#remotes/origin/}
+    git switch "$branch"
+  fi
+}
+
+alias gsw="gsw"
