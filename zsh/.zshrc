@@ -99,7 +99,7 @@ SCRIPT=$(jq -r ".scripts | keys[]" package.json | fzf --prompt="Select a script:
 '
 alias reload="source ~/.zshrc"
 alias stop_all_docker='docker ps -aq | xargs docker stop'
-alias vaults='cd $(find ~/vaults/ -maxdepth 1 -mindepth 1 -type d | sed "s|^\./||" | fzf) && vim'
+alias v='cd $(find ~/vaults/ -maxdepth 1 -mindepth 1 -type d | sed "s|^\./||" | fzf) && vim'
 
 
 # Fzf (Fuzzy Finder)
