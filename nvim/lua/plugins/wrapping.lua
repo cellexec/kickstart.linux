@@ -1,7 +1,9 @@
 return {
 	"andrewferrier/wrapping.nvim",
 	ft = { "markdown" },
-	opts = {},
+	opts = {
+		notify_on_switch = false
+	},
 	config = function(_, opts)
 		local wrapping = require("wrapping")
 		wrapping.setup(opts)
