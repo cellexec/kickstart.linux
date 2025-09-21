@@ -4,3 +4,6 @@
 /logs/
 /nvim/undodir
 
+
+# Obsidian Vaults
+/nvim/lua/plugins/local
