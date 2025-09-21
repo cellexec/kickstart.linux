@@ -99,8 +99,6 @@ SCRIPT=$(jq -r ".scripts | keys[]" package.json | fzf --prompt="Select a script:
 '
 alias reload="source ~/.zshrc"
 alias stop_all_docker='docker ps -aq | xargs docker stop'
-alias v='cd $(find ~/vaults/ -maxdepth 1 -mindepth 1 -type d | sed "s|^\./||" | fzf) && vim'
-
 
 # Fzf (Fuzzy Finder)
 export FZF_DEFAULT_OPTS='--layout=reverse --border --preview-window=wrap --height=40%'
@@ -161,3 +159,26 @@ gsw() {
 }
 
 alias gsw="gsw"
+
+unalias v 2>/dev/null
+v() {
+    # Use proper globbing for Zsh
+    local vaults
+    vaults=(~/vaults/*(/))  # (/) restricts to directories only
+
+    if (( ${#vaults[@]} == 0 )); then
+        echo "No vaults found in ~/vaults/"
+        return 1
+    elif (( ${#vaults[@]} == 1 )); then
+        cd "${vaults[1]}" || return
+    else
+        # Multiple vaults → fzf
+        local dir
+        dir=$(printf "%s\n" "${vaults[@]}" | fzf) || return
+        cd "$dir" || return
+    fi
+
+    vim
+}
+
+alias v="v"
