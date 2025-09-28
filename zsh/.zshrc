@@ -76,6 +76,7 @@ export EDITOR="$VISUAL"
 
 # Program alias
 alias fr="flux reconcile kustomization flux-system -n flux-system --with-source"
+alias lg="lazygit"
 alias ee="exit"
 alias k="kubectl"
 alias gl="git log --decorate --oneline --graph"
