@@ -15,13 +15,25 @@ return {
     "williamboman/mason-lspconfig.nvim",
 	},
 	config = function(event)
-		require("lspconfig").lua_ls.setup {}
-		require("lspconfig").ts_ls.setup {}
-		require("lspconfig").html.setup {}
-		require("lspconfig").helm_ls.setup {}
-		require("lspconfig").tailwindcss.setup {}
-		require("lspconfig").rust_analyzer.setup {}
+    local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+    require('mason-lspconfig').setup({
+      ensure_installed = {
+        'lua_ls',
+        'ts_ls',
+        'html',
+        'helm_ls',
+        'tailwindcss',
+        'rust_analyzer',
+      },
+      handlers = {
+        function(server_name)
+          require('lspconfig')[server_name].setup({
+            capabilities = capabilities,
+          })
+        end,
+      },
+    })
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup('group-lsp-attach', { clear = true }),
