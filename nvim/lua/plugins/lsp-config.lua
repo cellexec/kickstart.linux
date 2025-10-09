@@ -12,6 +12,7 @@ return {
 				},
 			},
 		},
+    "williamboman/mason-lspconfig.nvim",
 	},
 	config = function(event)
 		require("lspconfig").lua_ls.setup {}
