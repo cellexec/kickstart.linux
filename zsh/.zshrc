@@ -91,6 +91,7 @@ alias rmall="rm -rf ./* && rm -rf ./.*"
 alias docker-cleanall='docker stop $(docker ps -aq) 2>/dev/null && docker rm $(docker ps -aq) 2>/dev/null && docker rmi -f $(docker images -q) 2>/dev/null'
 
 # Command alias
+alias vpn='f=$(find ~/vpn -type f -name "*.ovpn" | fzf) && [ -n "$f" ] && sudo openvpn --config "$f"'
 alias gacp="[ -d .git ] && git add . && git commit && git pull && git push"
 alias gacpl="[ -d .git ] && git add . && git commit -m 'update' && git pull && git push"
 alias gacpp="[ -d .git ] && git add . && git commit -m 'update Lazy Plugins' && git pull && git push"
