@@ -23,6 +23,7 @@ return {
         'ts_ls',
         'html',
         'helm_ls',
+        'yamlls',
         'tailwindcss',
         'rust_analyzer',
       },
@@ -30,6 +31,18 @@ return {
         function(server_name)
           require('lspconfig')[server_name].setup({
             capabilities = capabilities,
+          })
+        end,
+        helm_ls = function()
+          require('lspconfig').helm_ls.setup({
+            capabilities = capabilities,
+            filetypes = { 'helm' },
+          })
+        end,
+        yamlls = function()
+          require('lspconfig').yamlls.setup({
+            capabilities = capabilities,
+            filetypes = { 'yaml.ansible' },
           })
         end,
       },
