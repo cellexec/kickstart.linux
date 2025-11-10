@@ -2,7 +2,7 @@
 -- https://github.com/Saghen/blink.cmp
 return {
 	'saghen/blink.cmp',
-	dependencies = { 'rafamadriz/friendly-snippets' },
+	dependencies = { 'rafamadriz/friendly-snippets', 'hrsh7th/cmp-nvim-lsp' },
 	version = '1.*',
 	opts = {
 		keymap = { preset = 'enter' },
@@ -12,7 +12,7 @@ return {
 			documentation = { auto_show = true },
 			ghost_text = { enabled = true },
 		},
-		sources = { default = { 'lsp', 'path', 'snippets', 'buffer' } },
+		sources = { default = { 'lsp', 'path', 'snippets' } },
 		fuzzy = { implementation = "prefer_rust_with_warning" },
 		cmdline = { completion = { ghost_text = { enabled = true } } }
 	},
