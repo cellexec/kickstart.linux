@@ -86,7 +86,6 @@ alias vim="nvim"
 alias ta="tmux attach"
 alias tk="tmux kill-session"
 alias tl="tmux list-session"
-alias tr="tmux kill-session -a && tk && tmux"
 alias ldk='lazydocker'
 alias rmall="rm -rf ./* && rm -rf ./.*"
 alias docker-cleanall='docker stop $(docker ps -aq) 2>/dev/null && docker rm $(docker ps -aq) 2>/dev/null && docker rmi -f $(docker images -q) 2>/dev/null'
