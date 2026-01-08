@@ -75,6 +75,8 @@ export EDITOR="$VISUAL"
 
 
 # Program alias
+alias c="vim ~/.zshrc && reload"
+alias sc="vim ~/.ssh/config"
 alias fr="flux reconcile kustomization flux-system -n flux-system --with-source"
 alias lg="lazygit"
 alias ee="exit"
