@@ -186,3 +186,8 @@ v() {
 }
 
 alias v="v"
+# Show neofetch on interactive login
+if [[ $- == *i* ]] && command -v neofetch >/dev/null; then
+    neofetch --off --color_blocks off
+fi
+
