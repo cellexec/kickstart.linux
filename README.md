@@ -1,3 +1,11 @@
+# ⚠️ DEPRECATED
+
+> **This repo has been superseded by [cellexec/dotfiles](https://github.com/cellexec/dotfiles)** — a unified, stow-based dotfile repo that supports omarchy, ubuntu server, and WSL from a single source of truth.
+>
+> This repo is kept for reference only and will no longer be maintained.
+
+---
+
 # 💻 kickstart.linux
 
 **kickstart.linux** is a lightweight, opinionated, and modular **dotfile and system bootstrapping solution** for Linux. It uses a `Makefile` to automate the installation of essential CLI tools, configure your shell, set up Neovim, and symlink your personal dotfiles, ensuring a consistent development environment across your machines.
